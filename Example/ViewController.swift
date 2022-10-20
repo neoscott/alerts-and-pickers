@@ -1,6 +1,5 @@
 import UIKit
 import SafariServices
-import Photos
 
 class ViewController: UIViewController {
     
@@ -17,13 +16,8 @@ class ViewController: UIViewController {
         case countryPicker = "Country Picker"
         case phoneCodePicker = "Phone Code Picker"
         case currencyPicker = "Currency Picker"
-        case imagePicker = "Image Picker"
-        case photoLibraryPicker = "Photo Library Picker"
         case colorPicker = "Color Picker"
         case textViewer = "Text Viewer"
-        case contactsPicker = "Contacts Picker"
-        case locationPicker = "Location Picker"
-        case telegramPicker = "Telegram Picker"
         
         var description: String {
             switch self {
@@ -36,13 +30,8 @@ class ViewController: UIViewController {
             case .countryPicker: return "TableView"
             case .phoneCodePicker: return "TableView"
             case .currencyPicker: return "TableView"
-            case .imagePicker: return "CollectionView, horizontal flow"
-            case .photoLibraryPicker: return "Select photos from Photo Library"
             case .colorPicker: return "Storyboard & Autolayout"
             case .textViewer: return "TextView, not editable"
-            case .contactsPicker: return "With SearchController"
-            case .locationPicker: return "MapView With SearchController"
-            case .telegramPicker: return "Similar to the Telegram"
             }
         }
         
@@ -57,13 +46,8 @@ class ViewController: UIViewController {
             case .countryPicker: return #imageLiteral(resourceName: "globe")
             case .phoneCodePicker: return #imageLiteral(resourceName: "telephone")
             case .currencyPicker: return #imageLiteral(resourceName: "currency")
-            case .imagePicker: return #imageLiteral(resourceName: "listings")
-            case .photoLibraryPicker: return #imageLiteral(resourceName: "four_rect")
             case .colorPicker: return #imageLiteral(resourceName: "colors")
             case .textViewer: return #imageLiteral(resourceName: "title")
-            case .contactsPicker: return #imageLiteral(resourceName: "user")
-            case .locationPicker: return #imageLiteral(resourceName: "planet")
-            case .telegramPicker: return #imageLiteral(resourceName: "library")
             }
         }
         
@@ -85,7 +69,7 @@ class ViewController: UIViewController {
         }
     }
     
-    fileprivate lazy var alerts: [AlertType] = [.simple, .simpleWithImages, .oneTextField, .twoTextFields, .dataPicker, .pickerView, .countryPicker, .phoneCodePicker, .currencyPicker, .imagePicker, .photoLibraryPicker, .colorPicker, .textViewer, .contactsPicker, .locationPicker, .telegramPicker]
+    fileprivate lazy var alerts: [AlertType] = [.simple, .simpleWithImages, .oneTextField, .twoTextFields, .dataPicker, .pickerView, .countryPicker, .phoneCodePicker, .currencyPicker, .colorPicker, .textViewer]
     
     // MARK: UI Metrics
     
@@ -324,28 +308,6 @@ class ViewController: UIViewController {
             alert.addAction(title: "Cancel", style: .cancel)
             alert.show()
             
-        case .imagePicker:
-            let photos: [UIImage] = [#imageLiteral(resourceName: "interior_design_1"), #imageLiteral(resourceName: "interior_design_2"), #imageLiteral(resourceName: "interior_design_3"), #imageLiteral(resourceName: "interior_design_4"), #imageLiteral(resourceName: "interior_design_5"), #imageLiteral(resourceName: "interior_design_8"), #imageLiteral(resourceName: "interior_design_9"), #imageLiteral(resourceName: "interior_design_10"), #imageLiteral(resourceName: "interior_design_11"), #imageLiteral(resourceName: "interior_design_12"), #imageLiteral(resourceName: "interior_design_13"), #imageLiteral(resourceName: "interior_design_14"), #imageLiteral(resourceName: "interior_design_15"), #imageLiteral(resourceName: "interior_design_16"), #imageLiteral(resourceName: "interior_design_17"), #imageLiteral(resourceName: "interior_design_18"), #imageLiteral(resourceName: "interior_design_19"), #imageLiteral(resourceName: "interior_design_20"), #imageLiteral(resourceName: "interior_design_21"), #imageLiteral(resourceName: "interior_design_22"), #imageLiteral(resourceName: "interior_design_23"), #imageLiteral(resourceName: "interior_design_24"), #imageLiteral(resourceName: "interior_design_25"), #imageLiteral(resourceName: "interior_design_26"), #imageLiteral(resourceName: "interior_design_27"), #imageLiteral(resourceName: "interior_design_28"), #imageLiteral(resourceName: "interior_design_29"), #imageLiteral(resourceName: "interior_design_30"), #imageLiteral(resourceName: "interior_design_31"), #imageLiteral(resourceName: "interior_design_32"), #imageLiteral(resourceName: "interior_design_33"), #imageLiteral(resourceName: "interior_design_34"), #imageLiteral(resourceName: "interior_design_35"), #imageLiteral(resourceName: "interior_design_36"), #imageLiteral(resourceName: "interior_design_37"), #imageLiteral(resourceName: "interior_design_38"), #imageLiteral(resourceName: "interior_design_39")]
-            
-            let alert = UIAlertController(style: self.alertStyle)
-            alert.addImagePicker(
-                flow: .vertical,
-                paging: false,
-                images: photos,
-                selection: .single(action: { image in
-                    Log(image)
-                }))
-            alert.addAction(title: "OK", style: .cancel)
-            alert.show()
-            
-        case .photoLibraryPicker:
-            let alert = UIAlertController(style: self.alertStyle)
-            alert.addPhotoLibraryPicker(flow: .vertical, paging: false,
-                selection: .multiple(action: { assets in Log(assets) }))
-            alert.addAction(title: "Cancel", style: .cancel)
-            alert.show()
-            
-            
         case .colorPicker:
             let alert = UIAlertController(style: self.alertStyle)
             alert.addColorPicker(color: UIColor(hex: 0xFF2DC6)) { color in Log(color) }
@@ -375,32 +337,6 @@ class ViewController: UIViewController {
             alert.addAction(title: "OK", style: .cancel)
             alert.show()
             
-        case .contactsPicker:
-            let alert = UIAlertController(style: self.alertStyle)
-            alert.addContactsPicker { contact in Log(contact) }
-            alert.addAction(title: "Cancel", style: .cancel)
-            alert.show()
-            
-        case .locationPicker:
-            let alert = UIAlertController(style: self.alertStyle)
-            alert.addLocationPicker { location in Log(location) }
-            alert.addAction(title: "Cancel", style: .cancel)
-            alert.show()
-            
-        case .telegramPicker:
-            let alert = UIAlertController(style: .actionSheet)
-            alert.addTelegramPicker { result in
-                switch result {
-                case .photo(let assets):
-                    Log(assets)
-                case .contact(let contact):
-                    Log(contact)
-                case .location(let location):
-                    Log(location)
-                }
-            }
-            alert.addAction(title: "Cancel", style: .cancel)
-            alert.show()
         }
     }
 }
